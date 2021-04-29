@@ -139,6 +139,7 @@ if __name__ == "__main__":
                             openingOdds=opening_odds,
                             winners=winners,
                             foods=foods,
+                            round=round,
                         )
                         f.write(json.dumps(data, separators=(",", ":")))
                     print(f'[PASSED] - {name}')
