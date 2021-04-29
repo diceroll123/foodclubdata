@@ -2,7 +2,7 @@
 
 # NOTES:
 #  - Must use Python3.8+
-#  - 618 files were invalid, 1515 files were valid.
+#  - 624 files were invalid, 1509 files were valid.
 #  - you'll probably need to change the Paths below.
 
 import json
@@ -97,7 +97,7 @@ if __name__ == "__main__":
                 js = json.loads(f.read())
                 round = int(js["round"])
 
-                if len(js['arenas']) == 0:
+                if len(js["arenas"]) == 0:
                     errors.append("MISSING_ARENAS")
                 else:
                     for arena_index in range(5):
@@ -124,12 +124,12 @@ if __name__ == "__main__":
                         current_odds.append([1] + these_current)
                         opening_odds.append([1] + these_opening)
 
-                if len(current_odds) != 5:
-                    errors.append('MISSING_CURRENT_ODDS')
-                if len(opening_odds) != 5:
-                    errors.append('MISSING_OPENING_ODDS')
+                if len(current_odds) != 5 or len(current_odds[0]) != 5:
+                    errors.append("MISSING_CURRENT_ODDS")
+                if len(opening_odds) != 5 or len(opening_odds[0]) != 5:
+                    errors.append("MISSING_OPENING_ODDS")
                 if sum(winners) == 0:
-                    errors.append('MISSING_WINNERS')
+                    errors.append("MISSING_WINNERS")
 
                 if len(errors) == 0:
                     with open(fixedfolder / name, "w") as f:
@@ -142,6 +142,6 @@ if __name__ == "__main__":
                             round=round,
                         )
                         f.write(json.dumps(data, separators=(",", ":")))
-                    print(f'[PASSED] - {name}')
+                    print(f"[PASSED] - {name}")
                 else:
                     print(f'[FAILED] - {name} - ERRORS: {", ".join(errors)}')
